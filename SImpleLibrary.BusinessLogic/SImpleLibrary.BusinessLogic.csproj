@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>$(DotnetFramework)</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SimpleLibrary.Common\SimpleLibrary.Common.csproj" />
+      <ProjectReference Include="..\SimpleLibrary.Database\SimpleLibrary.Database.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,2 +1,6 @@
-# simpleLibrary
-An example of a web api project in .net8
+# The purpose of this project
+Lorem ipsum ...
+
+# DB Migration
+
+Run the script ``````

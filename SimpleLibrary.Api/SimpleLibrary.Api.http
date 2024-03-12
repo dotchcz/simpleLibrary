@@ -1,0 +1,72 @@
+@HostAddress = https://localhost:5026/api
+
+### Get books
+GET {{HostAddress}}/Books/
+Accept: application/json
+
+### Get users
+GET {{HostAddress}}/User/
+Accept: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwMDBkODczOS0yYWNkLTRiYWUtODcwZC0zNzhhM2FkZDc4ODkiLCJzdWIiOiJhZG1pbkBtcy5jb20iLCJlbWFpbCI6ImFkbWluQG1zLmNvbSIsInVzZXJJZCI6ImFkbWluIiwiYWRtaW4iOiJ0cnVlIiwibmJmIjoxNzEwMjY2MjA0LCJleHAiOjE3MTAyNjk4MDQsImlhdCI6MTcxMDI2NjIwNCwiaXNzIjoiam9obm55SXNzdWVyIiwiYXVkIjoic2ltcGxlTGlicmFyeSJ9.N7NmvyUmA1LyZMplafYL6tiBHXsRXZ8iFIcV7ePV4Yc
+
+### Create new book as an admin
+POST {{HostAddress}}/Books/
+Accept: application/json
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwMDBkODczOS0yYWNkLTRiYWUtODcwZC0zNzhhM2FkZDc4ODkiLCJzdWIiOiJhZG1pbkBtcy5jb20iLCJlbWFpbCI6ImFkbWluQG1zLmNvbSIsInVzZXJJZCI6ImFkbWluIiwiYWRtaW4iOiJ0cnVlIiwibmJmIjoxNzEwMjY2MjA0LCJleHAiOjE3MTAyNjk4MDQsImlhdCI6MTcxMDI2NjIwNCwiaXNzIjoiam9obm55SXNzdWVyIiwiYXVkIjoic2ltcGxlTGlicmFyeSJ9.N7NmvyUmA1LyZMplafYL6tiBHXsRXZ8iFIcV7ePV4Yc
+
+{
+  "Title": "Example Book Title",
+  "Author": "Author Name",
+  "PublicationYear": 2021,
+  "MaxLoanDays": 30
+}
+
+### Create new book as a reader -> 403
+POST {{HostAddress}}/Books/
+Accept: application/json
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3NzAxOGZiNS1kYWIwLTQ4OWItOWIzZC0wNmMzYzlhZDQ4ZDUiLCJzdWIiOiJyZWFkZXJAbXMuY29tIiwiZW1haWwiOiJyZWFkZXJAbXMuY29tIiwidXNlcklkIjoicmVhZGVyIiwiYWRtaW4iOiJmYWxzZSIsIm5iZiI6MTcxMDI2NTY2NiwiZXhwIjoxNzEwMjY5MjY2LCJpYXQiOjE3MTAyNjU2NjYsImlzcyI6ImpvaG5ueUlzc3VlciIsImF1ZCI6InNpbXBsZUxpYnJhcnkifQ.VCBQkBAffNij3bEZ7m3rqhSKFnRlKeecvlCFGPYdFJk
+
+{
+  "Title": "Example Book Title",
+  "Author": "Author Name",
+  "PublicationYear": 2021,
+  "MaxLoanDays": 30
+}
+
+### generate a token for admin
+POST {{HostAddress}}/Identity/token
+Content-Type: application/json
+Accept: application/json
+
+{
+  "Email": "admin@ms.com",
+  "CustomClaims": {
+    "admin": "true"
+  }
+}
+
+### generate a token for reader
+POST {{HostAddress}}/Identity/token
+Content-Type: application/json
+Accept: application/json
+
+{
+  "Email": "reader@ms.com",
+  "CustomClaims": {
+    "admin": "false"
+  }
+}
+
+### create a loan as a reader
+POST {{HostAddress}}/Loans/
+Accept: application/json
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3NzAxOGZiNS1kYWIwLTQ4OWItOWIzZC0wNmMzYzlhZDQ4ZDUiLCJzdWIiOiJyZWFkZXJAbXMuY29tIiwiZW1haWwiOiJyZWFkZXJAbXMuY29tIiwidXNlcklkIjoicmVhZGVyIiwiYWRtaW4iOiJmYWxzZSIsIm5iZiI6MTcxMDI2NTY2NiwiZXhwIjoxNzEwMjY5MjY2LCJpYXQiOjE3MTAyNjU2NjYsImlzcyI6ImpvaG5ueUlzc3VlciIsImF1ZCI6InNpbXBsZUxpYnJhcnkifQ.VCBQkBAffNij3bEZ7m3rqhSKFnRlKeecvlCFGPYdFJk
+
+{
+  "LoanDate": "2024-02-12",
+  "BookId":1,
+  "UserId":2
+}
